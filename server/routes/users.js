@@ -1,9 +1,13 @@
 import { Router } from 'express';
-const router = Router();
+import UserController from '../controller/userController.js'
 
-/* GET users listing. */
-router.get('/', function(req, res, next) {
-  res.status(200).json({msg:'respond with a resource'});
-});
+const router = Router();
+const controller = new UserController()
+
+router.get('/', controller.handleGetAllItems);
+router.get('/', controller.handleGetItem);
+router.post('/', controller.handleCreateItem);
+router.put('/', controller.handleUpdateItem);
+router.delete('/', controller.handleDeleteItem);
 
 export default router;

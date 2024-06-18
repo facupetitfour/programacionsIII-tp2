@@ -1,15 +1,19 @@
-import express, {urlencoded } from 'express';
-import cookieParser from 'cookie-parser';
-import logger from 'morgan';
+import express, { urlencoded } from "express";
+import cookieParser from "cookie-parser";
+import logger from "morgan";
 import bodyParser from "body-parser";
-import indexRouter from './routes/index.js';
-import usersRouter from './routes/users.js';
+import indexRouter from "./routes/index.js";
+import usersRouter from "./routes/users.js";
+import { connectdb } from "./mongoDB/dbMongoose.js";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const app = express();
 
 // Middleware de registro de solicitudes
 app.use(logger("dev"));
-app.use(express.static('public'));
+app.use(express.static("public"));
 app.use(urlencoded({ extended: false }));
 app.use(cookieParser());
 // Configurar para analizar solicitudes JSON
@@ -19,12 +23,12 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // Rutas
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use("/", indexRouter);
+app.use("/users", usersRouter);
 
 // Manejo de errores 404
 app.use((req, res, next) => {
-  res.status(404).json({msg:"Sorry, page not found!"}); //se debe crear una vista de errores
+  res.status(404).json({ msg: "Sorry, page not found!" }); //se debe crear una vista de errores
 });
 
 // Manejador de errores
@@ -34,19 +38,23 @@ app.use((err, req, res, next) => {
 });
 
 // Iniciar el servidor
+connectdb();
 const PORT = process.env.PORT || 3000;
 // dbInitialize();
 app.listen(PORT, () => {
-  
   // Colores en la consola utilizando secuencias de escape ANSI
   const resetColor = "\x1b[0m"; // Restablecer el color a su valor predeterminado
   const purpleColor = "\x1b[35m"; // Color rojo
   const greenColor = "\x1b[32m"; // Color verde
   const yellowColor = "\x1b[33m"; // Color amarillo
 
-  console.log(purpleColor + "------------------------------------------------")
-  console.info(yellowColor+ `Server listening on port ${PORT} || http://localhost:3000/`);
-  console.log(purpleColor + "------------------------------------------------" + resetColor)
-
+  console.log(purpleColor + "------------------------------------------------");
+  console.info(
+    yellowColor + `Server listening on port ${PORT} || http://localhost:3000/`
+  );
+  console.log(
+    purpleColor +
+      "------------------------------------------------" +
+      resetColor
+  );
 });
-

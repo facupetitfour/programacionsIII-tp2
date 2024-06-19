@@ -4,6 +4,7 @@ import logger from "morgan";
 import bodyParser from "body-parser";
 import indexRouter from "./routes/index.js";
 import usersRouter from "./routes/users.js";
+import authenticateRouter from './routes/login.js'
 import { connectdb } from "./mongoDB/dbMongoose.js";
 import dotenv from "dotenv";
 
@@ -25,6 +26,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
+app.use('/authenticate', authenticateRouter)
 
 // Manejo de errores 404
 app.use((req, res, next) => {

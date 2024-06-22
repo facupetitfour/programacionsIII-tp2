@@ -7,8 +7,8 @@ import usersRouter from "./routes/users.js";
 import authenticateRouter from './routes/login.js'
 import { connectdb } from "./mongoDB/dbMongoose.js";
 import dotenv from "dotenv";
-
 dotenv.config();
+
 
 const app = express();
 
@@ -40,7 +40,6 @@ app.use((err, req, res, next) => {
 });
 
 // Iniciar el servidor
-connectdb();
 const PORT = process.env.PORT || 3000;
 // dbInitialize();
 app.listen(PORT, () => {
@@ -60,3 +59,5 @@ app.listen(PORT, () => {
       resetColor
   );
 });
+connectdb();
+

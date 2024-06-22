@@ -1,5 +1,6 @@
-import jwt from "jsonwebtoken"
-
+import jwt, { decode } from "jsonwebtoken"
+import 'dotenv/config'
+const secretKey = process.env.secretKey
 class RoutesAuth {
   async handleValidateToken (req,res,next) {
     try {
@@ -7,10 +8,11 @@ class RoutesAuth {
       if (!token){
         return res.status(401).json({message:"No hay token"})
       }
+      jwt.verify(token,secretKey)
       next();
-
     } catch (error) {
-      res.status(505).json({message:"error interno del servidor"})
+      console.error(error.message)
+      res.status(505).json({message:error.message})
     }
 
   }

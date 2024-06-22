@@ -30,3 +30,7 @@ En este trabajo práctico, se espera que los estudiantes desarrollen una aplicac
   - 1 semana: backend proyecto.
   - 2 semana: Implementación métodos.
   - 3 semana: presentación trabajo practic
+
+Variables de entorno:
+MONGO_URI= "mongodb://127.0.0.1:27017/tp2Programacion"
+secretKey= "escribir una clave"

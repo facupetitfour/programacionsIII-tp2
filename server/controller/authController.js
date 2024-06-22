@@ -1,6 +1,7 @@
 import User from "../models/userSchema.js";
 import jwt from "jsonwebtoken";
-
+import 'dotenv/config'
+const secretKey = process.env.secretKey
 class AuthController {
 
   async handleLogin(req, res) {
@@ -19,8 +20,8 @@ class AuthController {
 
         // Si existe se crea token, sino, se entrega un mensaje de error.
         if (passwordboolean) {
-          const token = jwt.sign({ id: userExist._id }, "secretkey", {
-            expiresIn: "6h",
+          const token = jwt.sign({ id: userExist._id }, secretKey, {
+            expiresIn: "10s",
           });
           res.cookie("token",token)
           res
@@ -72,7 +73,7 @@ class AuthController {
       const savedUser = await newUser.save();
 
       // Genero token
-      const token = jwt.sign({ id: savedUser._id }, "secretkey", {expiresIn: "6h"},
+      jwt.sign({ id: savedUser._id }, secretKey, {expiresIn: "6h"},
         (err,token)=>{
           if(err) throw err
           res.cookie("token",token)

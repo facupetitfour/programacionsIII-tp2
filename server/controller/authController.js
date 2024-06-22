@@ -2,31 +2,40 @@ import User from "../models/userSchema.js";
 import jwt from "jsonwebtoken";
 
 class AuthController {
+
   async handleLogin(req, res) {
     try {
-      
-      const {username, password} = req.body
+      const { username, password } = req.body;
 
       //Verifica si existe el usuario
-      const userExist = await User.findOne({username})
-      
-      if (userExist) {
+      const userExist = await User.findOne({ username });
 
-        // Compara contraseñas guardada y ingresada por el usuario a ver si son correctas. 
-        const passwordboolean = await User.comparePassword(password,userExist.password)
-        
+      if (userExist) {
+        // Compara contraseñas guardada y ingresada por el usuario a ver si son correctas.
+        const passwordboolean = await User.comparePassword(
+          password,
+          userExist.password
+        );
+
         // Si existe se crea token, sino, se entrega un mensaje de error.
         if (passwordboolean) {
-
-          const token = jwt.sign({ id: userExist._id }, "secretkey", { expiresIn: '6h' });
-          res.status(201).json({ message: "Usuario inicio exitosamente", token: token });
-
-        } else{
-          res.status(500).json({message:"Credenciales no validas, intente nuevamente"})
+          const token = jwt.sign({ id: userExist._id }, "secretkey", {
+            expiresIn: "6h",
+          });
+          res.cookie("token",token)
+          res
+            .status(201)
+            .json({ message: "Usuario inicio exitosamente"});
+        } else {
+          res
+            .status(500)
+            .json({ message: "Credenciales no validas, intente nuevamente" });
         }
-      } 
+      }
     } catch (error) {
-      res.status(500).json({message:"Error al inicar sesion", error: error.message})
+      res
+        .status(500)
+        .json({ message: "Error al inicar sesion", error: error.message });
     }
   }
   async handleRegister(req, res) {
@@ -61,19 +70,26 @@ class AuthController {
 
       // Guardar el usuario nuevo
       const savedUser = await newUser.save();
-      
-      // Genero token
-      const token = jwt.sign({ id: savedUser._id }, "secretkey", { expiresIn: '6h' });
 
-      res.status(201).json({ message: "Usuario registrado exitosamente", token: token });
-    } catch (error) {
-      res
-        .status(500)
-        .json({
-          message: "Error al registrar el usuario",
-          error: error.message,
+      // Genero token
+      const token = jwt.sign({ id: savedUser._id }, "secretkey", {expiresIn: "6h"},
+        (err,token)=>{
+          if(err) throw err
+          res.cookie("token",token)
+          res.status(201).json({ message: "Usuario registrado exitosamente"});
         });
+
+
+    } catch (error) {
+      res.status(500).json({
+        message: "Error al registrar el usuario",
+        error: error.message,
+      });
     }
+  }
+  async handleLogOut(req, res) {
+    res.cookie("token", "", {expires: new Date(0)});
+    res.sendStatus(200)
   }
 }
 

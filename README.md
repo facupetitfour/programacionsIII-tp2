@@ -25,11 +25,11 @@ En este trabajo práctico, se espera que los estudiantes desarrollen una aplicac
 ## Clases
 - **Tiempo:** 3 semanas
 - **Inicio:** 4/06/2024 
-- **Fin:** 18/06/2024
+- **Fin:** 25/06/2024
 - **Recomendaciones:**
   - 1 semana: backend proyecto.
   - 2 semana: Implementación métodos.
-  - 3 semana: presentación trabajo practic
+  - 3 semana: presentación trabajo practico
 
 Variables de entorno:
 MONGO_URI= "mongodb://127.0.0.1:27017/tp2Programacion"

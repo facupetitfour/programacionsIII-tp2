@@ -1,5 +1,6 @@
 import express, { urlencoded } from "express";
 import cookieParser from "cookie-parser";
+import cors from "cors"
 import logger from "morgan";
 import bodyParser from "body-parser";
 import indexRouter from "./routes/index.js";
@@ -13,6 +14,11 @@ dotenv.config();
 const app = express();
 
 // Middleware de registro de solicitudes
+app.use(cors({
+  origin: 'http://localhost:5173', // La URL del frontend
+  credentials: true
+}));
+
 app.use(logger("dev"));
 app.use(express.static("public"));
 app.use(urlencoded({ extended: false }));

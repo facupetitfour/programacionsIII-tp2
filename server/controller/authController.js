@@ -21,9 +21,9 @@ class AuthController {
         // Si existe se crea token, sino, se entrega un mensaje de error.
         if (passwordboolean) {
           const token = jwt.sign({ id: userExist._id }, secretKey, {
-            expiresIn: "10s",
+            expiresIn: "6h",
           });
-          res.cookie("token",token)
+          res.cookie("token",token,{ httpOnly: false, secure: false, sameSite: 'lax' })
           res
             .status(201)
             .json({ message: "Usuario inicio exitosamente"});
@@ -32,6 +32,8 @@ class AuthController {
             .status(500)
             .json({ message: "Credenciales no validas, intente nuevamente" });
         }
+      }else{
+        res.status(404).json({message:"el usuario no existe"})
       }
     } catch (error) {
       res
@@ -76,7 +78,7 @@ class AuthController {
       jwt.sign({ id: savedUser._id }, secretKey, {expiresIn: "6h"},
         (err,token)=>{
           if(err) throw err
-          res.cookie("token",token)
+          res.cookie("token",token,{ httpOnly: false, secure: false, sameSite: 'lax' })
           res.status(201).json({ message: "Usuario registrado exitosamente"});
         });
 
@@ -92,6 +94,39 @@ class AuthController {
     res.cookie("token", "", {expires: new Date(0)});
     res.sendStatus(200)
   }
+  async handleChangePasswordWhithOldPassword(req,res){
+    try {
+      const {passwordOld, passwordNew} = req.body
+      const {token} = req.cookies
+      const userID = jwt.decode(token)
+      const userExist = await User.findById(userID.id)
+      const passwordboolean = await User.comparePassword(
+        passwordOld,
+        userExist.password
+      );
+
+      if (passwordboolean) {
+        userExist.password = await User.encryptPassword(passwordNew)
+        await userExist.save();
+        res.status(200).json({message: "Contraseña actualizada correctamente"})
+      }else{
+        throw error
+      }
+
+    } catch (error) {
+      res.status(400).json({message: error.message})
+    }
+
+
+  }
+  async handleChangePasswordWhithCodeEmail(req,res){
+    const {validateCode, passwordNew} = req.body
+  }
+
+  async handleValidateEmail(req,res){
+
+  }
+
 }
 
 export default AuthController;

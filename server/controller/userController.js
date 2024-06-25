@@ -1,5 +1,5 @@
 import User from "../models/userSchema.js";
-import jwt from 'jsonwebtoken';
+// import jwt from 'jsonwebtoken';
 
 class UserController {
   // Obtener todos los usuarios
@@ -31,7 +31,7 @@ class UserController {
   // Crear un nuevo usuario
   async handleCreateItem(req, res) {
     try {
-      const { username, email, password, roles } = req.body;
+      const { username, email, password, /*role*/} = req.body;
 
       // Verificar si el usuario o el correo ya existen
       const existingUser = await User.findOne({ $or: [{ username }, { email }] });

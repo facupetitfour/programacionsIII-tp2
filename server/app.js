@@ -1,23 +1,25 @@
 import express, { urlencoded } from "express";
 import cookieParser from "cookie-parser";
-import cors from "cors"
+import cors from "cors";
 import logger from "morgan";
 import bodyParser from "body-parser";
 import indexRouter from "./routes/index.js";
 import usersRouter from "./routes/users.js";
-import authenticateRouter from './routes/login.js'
+import authenticateRouter from "./routes/login.js";
 import { connectdb } from "./mongoDB/dbMongoose.js";
 import dotenv from "dotenv";
+import productsRouter from "./routes/products.js";
 dotenv.config();
-
 
 const app = express();
 
 // Middleware de registro de solicitudes
-app.use(cors({
-  origin: 'http://localhost:5173', // La URL del frontend
-  credentials: true
-}));
+app.use(
+  cors({
+    origin: "http://localhost:5173", // La URL del frontend
+    credentials: true,
+  })
+);
 
 app.use(logger("dev"));
 app.use(express.static("public"));
@@ -32,7 +34,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
-app.use('/authenticate', authenticateRouter)
+app.use("/authenticate", authenticateRouter);
+app.use("/products", productsRouter);
 
 // Manejo de errores 404
 app.use((req, res, next) => {
@@ -66,4 +69,3 @@ app.listen(PORT, () => {
   );
 });
 connectdb();
-

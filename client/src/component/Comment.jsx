@@ -40,7 +40,6 @@ export const Comment = () => {
         title: inputRef.current.value
       });
     }
-    inputRef.current.value = '';
   };
 
   const handleRemove = (index) => {
@@ -61,7 +60,7 @@ export const Comment = () => {
       <form onSubmit={handleSubmit}>
         <label htmlFor="">New comment</label>
         <input type="text" name='title' ref={inputRef} />
-        <input type="submit" value={editIndex !== null ? 'Update' : 'Comentar'} />
+        <input type="submit" value={editIndex !== null ? 'editar' : 'Comentar'} />
       </form>
       <div>
         {comments && comments.map((comment, index) => (

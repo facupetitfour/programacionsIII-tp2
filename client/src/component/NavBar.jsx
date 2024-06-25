@@ -43,8 +43,8 @@ const NavBar = () => {
       onKeyDown={toggleDrawer(false)}
     >
       <List>
-        <ListItem button>
-          <ListItemText primary="Profile" />
+        <ListItem button component={Link} to= ''>
+          <ListItemText primary="inicio" />
         </ListItem>
         <ListItem button>
           <ListItemText primary="My account" />

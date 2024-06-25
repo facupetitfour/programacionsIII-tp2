@@ -14,6 +14,7 @@ import Divider from '@mui/material/Divider';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { Link } from 'react-router-dom';
+import ListaBodega from './ListaBodegas';
 
 const NavBar = () => {
   const [auth, setAuth] = React.useState(true);
@@ -79,7 +80,7 @@ const NavBar = () => {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            Photos
+            Inicio
           </Typography>
           {auth && (
             <div>

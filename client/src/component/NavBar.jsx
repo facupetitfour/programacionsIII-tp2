@@ -14,7 +14,7 @@ import Divider from '@mui/material/Divider';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { Link } from 'react-router-dom';
-import ListaBodega from './ListaBodegas';
+
 
 const NavBar = () => {
   const [auth, setAuth] = React.useState(true);
@@ -110,7 +110,7 @@ const NavBar = () => {
                 onClose={handleClose}
               >
                 <MenuItem onClick={handleClose}>Login </MenuItem>
-                <MenuItem onClick={handleClose}>Register</MenuItem>
+                <MenuItem component={Link} to='/register'>Register</MenuItem>
               </Menu>
             </div>
           )}

@@ -47,8 +47,8 @@ const NavBar = () => {
         <ListItem button component={Link} to= ''>
           <ListItemText primary="inicio" />
         </ListItem>
-        <ListItem button>
-          <ListItemText primary="My account" />
+        <ListItem button component={Link} to='/listabodega'>
+          <ListItemText primary="Lista bodegas" />
         </ListItem>
       </List>
       <Divider />

@@ -25,7 +25,7 @@ const ListaBodega = () => {
               {bodega.descripcion}
             </Typography>
             <Typography variant="body2" color="text.secondary" sx={{ fontWeight: 'bold'}}>
-              {bodega.location}
+            {bodega.location}
             </Typography>
           </CardContent>
         </Card>

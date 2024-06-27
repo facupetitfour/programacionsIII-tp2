@@ -57,11 +57,7 @@ const NavBar = () => {
           <ListItemText primary="Logout" />
         </ListItem>
       </List>
-      <List>
-        <ListItem button component={Link} to='/comment'>
-          <ListItemText primary="Comments" />
-        </ListItem>
-      </List>
+      
     </Box>
   );
 

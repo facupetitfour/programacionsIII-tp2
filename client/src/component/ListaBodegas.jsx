@@ -5,6 +5,25 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
+import WineBarIcon from '@mui/icons-material/WineBar';
+import {Comment} from './Comment'
+
+const renderRating = (rating) => {
+  const maxRating = 5;
+  const fullGlasses = Math.min(rating, maxRating);
+  const emptyGlasses = maxRating - fullGlasses;
+
+  return (
+    <Box sx={{ display: 'flex', alignItems: 'center', marginTop: 1 }}>
+      {[...Array(fullGlasses)].map((_, index) => (
+        <WineBarIcon key={`full-${index}`} />
+      ))}
+      {[...Array(emptyGlasses)].map((_, index) => (
+        <WineBarIcon key={`empty-${index}`} style={{ color: '#ccc' }} />
+      ))}
+    </Box>
+  );
+}
 
 const ListaBodega = () => {
   return (
@@ -25,8 +44,10 @@ const ListaBodega = () => {
               {bodega.descripcion}
             </Typography>
             <Typography variant="body2" color="text.secondary" sx={{ fontWeight: 'bold'}}>
-            {bodega.location}
+              {bodega.location}
             </Typography>
+            {renderRating(bodega.rating)}
+          <Comment/>
           </CardContent>
         </Card>
       ))}

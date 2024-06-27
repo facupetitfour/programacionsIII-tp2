@@ -40,8 +40,8 @@ export const Comment = () => {
         title: inputRef.current.value
       });
     }
+    inputRef.current.value = '';
   };
-
   const handleRemove = (index) => {
     dispatch({
       type: 'remove-comment',
@@ -56,9 +56,8 @@ export const Comment = () => {
 
   return (
     <div>
-      <h3>Comentario de la página</h3>
+      <h3>Comentario de la Bodega</h3>
       <form onSubmit={handleSubmit}>
-        <label htmlFor="">New comment</label>
         <input type="text" name='title' ref={inputRef} />
         <input type="submit" value={editIndex !== null ? 'editar' : 'Comentar'} />
       </form>
